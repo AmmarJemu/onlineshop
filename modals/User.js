@@ -9,6 +9,6 @@ const userSchema = new mongoose.Schema({
 }, { minimize: false });
 
 // ✅ fixed: proper model registration with fallback to avoid overwrite issues
-const User = mongoose.models.User || mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export default User;

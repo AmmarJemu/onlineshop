@@ -2,8 +2,11 @@ import { Inngest } from "inngest";
 import connectDB from "./db";
 import User from "@/modals/User";
 
-// inngest functions
-const syncUserCreation = new Inngest().createFunction(
+// Create a single Inngest client instance
+export const inngest = new Inngest({ id: "Muhamiz-next" });
+
+// Create functions using the same instance
+export const syncUserCreation = inngest.createFunction(
   { id: "sync-user-from-clerk" },
   { event: "clerk/user.created" },
   async ({ event }) => {
@@ -19,7 +22,7 @@ const syncUserCreation = new Inngest().createFunction(
   }
 );
 
-const syncUpdation = new Inngest().createFunction(
+export const syncUpdation = inngest.createFunction(
   { id: "update-user-from-clerk" },
   { event: "clerk/user.updated" },
   async ({ event }) => {
@@ -34,7 +37,7 @@ const syncUpdation = new Inngest().createFunction(
   }
 );
 
-const syncUserDeletion = new Inngest().createFunction(
+export const syncUserDeletion = inngest.createFunction(
   { id: "delete-user-from-clerk" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
@@ -44,11 +47,5 @@ const syncUserDeletion = new Inngest().createFunction(
   }
 );
 
-// ✅ Register all functions in the client
-export const inngest = new Inngest({
-  id: "Muhamiz-next",
-  functions: [syncUserCreation, syncUpdation, syncUserDeletion],
-});
-
-// Export functions (optional if used elsewhere)
-export { syncUserCreation, syncUpdation, syncUserDeletion };
+// Register all functions with the client instance
+inngest.functions = [syncUserCreation, syncUpdation, syncUserDeletion];
