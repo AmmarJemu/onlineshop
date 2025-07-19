@@ -1,6 +1,6 @@
 import { Inngest } from 'inngest';
 import connectDB from './db'; // Ensure this properly initializes MongoDB connection
-import User from '@/models/User';
+import User from '@/modals/User';
 
 // Initialize Inngest with your app name
 export const inngest = new Inngest({ 
