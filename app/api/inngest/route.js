@@ -1,7 +1,13 @@
-import { inngest } from "@/config/inngest";
+import { serve } from 'inngest/next';
+import { inngest, syncUserCreation, syncUpdation, syncUserDeletion } from '@/config/inngest';
 
-export const runtime = "edge";
+// Create the handler
+const handler = serve({
+  client: inngest,
+  functions: [syncUserCreation, syncUpdation, syncUserDeletion],
+  
+});
 
-export async function POST(req) {
-  return inngest.handleRequest(req);
-}
+
+export const { GET, POST, PUT } = handler;
+
